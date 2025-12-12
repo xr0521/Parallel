@@ -228,9 +228,69 @@ void listExample() {
 }
 ```
 
+### 标准STL关联容器
 
+#### set
 
-### 关联容器
+特点:  基于二叉树、元素唯一且按键有序
 
+适用场景: 快速查找、按序便利、自动去重
 
+时间复杂度: 插入 O(log n)  删除  O(log n)  查找 find/count O(log n) 
+
+常用方法:
+
+```C++
+void setExample() {
+    //set构造方式
+    /*std::set的构造方式只接受三种:
+    * 1、范围构造: 接受两个迭代器  如(begin()、end())
+    * 2、初始化构造: 接收{...}包裹的内容
+    * 3、复制\移动构造: 接受另一个 std::set
+    */
+    std::set<std::string> set;//默认构造方式
+    std::string s = "Hello";
+    std::set<char> set1(s.begin(), s.end());
+    for (const auto& s:set1) {
+        std::cout << s << ",";
+    }
+    std::cout << std::endl;
+    std::vector<std::string> vec;
+    vec.reserve(10);
+    int number[] = { 0,1,2,3,4,5,6,7,8,9 };
+    std::string word = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+    //随机数生成
+    std::random_device rd;
+    std::mt19937 gen(rd());//梅森旋转算法作为随机数引擎
+    std::uniform_int_distribution<int> dist(1,51);
+    std::string code;
+    for (int i = 0; i < 5;++i) {
+        for (int j = 0; j < 5;++j) {
+            code += word.at(dist(gen));
+        }
+        vec.push_back(code);
+        code.clear();
+    }
+    std::set<std::string> codeSet(vec.begin(), vec.end());
+    for (const auto& s: codeSet) {
+        std::cout << s << ",";
+    }
+    std::cout << std::endl;
+    auto it=codeSet.lower_bound("hello");
+    if (it==codeSet.end()) {
+        std::cout << "不存在" << std::endl;
+    }
+    std::cout << "it=" << *it << std::endl;
+}
+```
+
+#### multiset
+
+特点：与set类似、但是允许有相同元素
+
+#### map
+
+特点: 有序映射、按照键值对进行存放(key-value)、底层同样是平衡二叉树
+
+#### multimap
 
